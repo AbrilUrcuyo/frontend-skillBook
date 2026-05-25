@@ -12,7 +12,7 @@ part of 'note.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-dto',
 );
 
 Note _$NoteFromJson(Map<String, dynamic> json) {
@@ -23,7 +23,7 @@ Note _$NoteFromJson(Map<String, dynamic> json) {
 mixin _$Note {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String get descripcion => throw _privateConstructorUsedError;
+  String get content => throw _privateConstructorUsedError;
 
   /// Serializes this Note to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $NoteCopyWith<$Res> {
   factory $NoteCopyWith(Note value, $Res Function(Note) then) =
       _$NoteCopyWithImpl<$Res, Note>;
   @useResult
-  $Res call({String id, String title, String descripcion});
+  $Res call({String id, String title, String content});
 }
 
 /// @nodoc
@@ -56,7 +56,7 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null, Object? title = null, Object? descripcion = null}) {
+  $Res call({Object? id = null, Object? title = null, Object? content = null}) {
     return _then(
       _value.copyWith(
         id: null == id
@@ -67,9 +67,9 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
                 as String,
-        descripcion: null == descripcion
-            ? _value.descripcion
-            : descripcion // ignore: cast_nullable_to_non_nullable
+        content: null == content
+            ? _value.content
+            : content // ignore: cast_nullable_to_non_nullable
                 as String,
       ) as $Val,
     );
@@ -83,7 +83,7 @@ abstract class _$$NoteImplCopyWith<$Res> implements $NoteCopyWith<$Res> {
       __$$NoteImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String title, String descripcion});
+  $Res call({String id, String title, String content});
 }
 
 /// @nodoc
@@ -97,7 +97,7 @@ class __$$NoteImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null, Object? title = null, Object? descripcion = null}) {
+  $Res call({Object? id = null, Object? title = null, Object? content = null}) {
     return _then(
       _$NoteImpl(
         id: null == id
@@ -108,9 +108,9 @@ class __$$NoteImplCopyWithImpl<$Res>
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
                 as String,
-        descripcion: null == descripcion
-            ? _value.descripcion
-            : descripcion // ignore: cast_nullable_to_non_nullable
+        content: null == content
+            ? _value.content
+            : content // ignore: cast_nullable_to_non_nullable
                 as String,
       ),
     );
@@ -121,7 +121,7 @@ class __$$NoteImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$NoteImpl implements _Note {
   const _$NoteImpl(
-      {required this.id, required this.title, required this.descripcion});
+      {required this.id, required this.title, required this.content});
 
   factory _$NoteImpl.fromJson(Map<String, dynamic> json) =>
       _$$NoteImplFromJson(json);
@@ -131,11 +131,11 @@ class _$NoteImpl implements _Note {
   @override
   final String title;
   @override
-  final String descripcion;
+  final String content;
 
   @override
   String toString() {
-    return 'Note(id: $id, title: $title, descripcion: $descripcion)';
+    return 'Note(id: $id, title: $title, content: $content)';
   }
 
   @override
@@ -145,13 +145,12 @@ class _$NoteImpl implements _Note {
             other is _$NoteImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.descripcion, descripcion) ||
-                other.descripcion == descripcion));
+            (identical(other.content, content) || other.content == content));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, descripcion);
+  int get hashCode => Object.hash(runtimeType, id, title, content);
 
   /// Create a copy of Note
   /// with the given fields replaced by the non-null parameter values.
@@ -171,7 +170,7 @@ abstract class _Note implements Note {
   const factory _Note(
       {required final String id,
       required final String title,
-      required final String descripcion}) = _$NoteImpl;
+      required final String content}) = _$NoteImpl;
 
   factory _Note.fromJson(Map<String, dynamic> json) = _$NoteImpl.fromJson;
 
@@ -180,7 +179,7 @@ abstract class _Note implements Note {
   @override
   String get title;
   @override
-  String get descripcion;
+  String get content;
 
   /// Create a copy of Note
   /// with the given fields replaced by the non-null parameter values.
