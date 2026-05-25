@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "aur.frontend.skillbook.frontend_skillbook"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.1.12297006"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
