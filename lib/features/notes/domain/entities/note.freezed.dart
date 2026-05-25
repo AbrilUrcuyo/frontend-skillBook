@@ -21,6 +21,7 @@ Note _$NoteFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Note {
+  String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get descripcion => throw _privateConstructorUsedError;
 
@@ -38,7 +39,7 @@ abstract class $NoteCopyWith<$Res> {
   factory $NoteCopyWith(Note value, $Res Function(Note) then) =
       _$NoteCopyWithImpl<$Res, Note>;
   @useResult
-  $Res call({String title, String descripcion});
+  $Res call({String id, String title, String descripcion});
 }
 
 /// @nodoc
@@ -55,19 +56,22 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? title = null, Object? descripcion = null}) {
+  $Res call({Object? id = null, Object? title = null, Object? descripcion = null}) {
     return _then(
       _value.copyWith(
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
-            descripcion: null == descripcion
-                ? _value.descripcion
-                : descripcion // ignore: cast_nullable_to_non_nullable
-                      as String,
-          )
-          as $Val,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                as String,
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                as String,
+        descripcion: null == descripcion
+            ? _value.descripcion
+            : descripcion // ignore: cast_nullable_to_non_nullable
+                as String,
+      ) as $Val,
     );
   }
 }
@@ -75,12 +79,11 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
 /// @nodoc
 abstract class _$$NoteImplCopyWith<$Res> implements $NoteCopyWith<$Res> {
   factory _$$NoteImplCopyWith(
-    _$NoteImpl value,
-    $Res Function(_$NoteImpl) then,
-  ) = __$$NoteImplCopyWithImpl<$Res>;
+          _$NoteImpl value, $Res Function(_$NoteImpl) then) =
+      __$$NoteImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, String descripcion});
+  $Res call({String id, String title, String descripcion});
 }
 
 /// @nodoc
@@ -88,23 +91,27 @@ class __$$NoteImplCopyWithImpl<$Res>
     extends _$NoteCopyWithImpl<$Res, _$NoteImpl>
     implements _$$NoteImplCopyWith<$Res> {
   __$$NoteImplCopyWithImpl(_$NoteImpl _value, $Res Function(_$NoteImpl) _then)
-    : super(_value, _then);
+      : super(_value, _then);
 
   /// Create a copy of Note
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? title = null, Object? descripcion = null}) {
+  $Res call({Object? id = null, Object? title = null, Object? descripcion = null}) {
     return _then(
       _$NoteImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                as String,
         title: null == title
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
         descripcion: null == descripcion
             ? _value.descripcion
             : descripcion // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }
@@ -113,11 +120,14 @@ class __$$NoteImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NoteImpl implements _Note {
-  const _$NoteImpl({required this.title, required this.descripcion});
+  const _$NoteImpl(
+      {required this.id, required this.title, required this.descripcion});
 
   factory _$NoteImpl.fromJson(Map<String, dynamic> json) =>
       _$$NoteImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final String title;
   @override
@@ -125,7 +135,7 @@ class _$NoteImpl implements _Note {
 
   @override
   String toString() {
-    return 'Note(title: $title, descripcion: $descripcion)';
+    return 'Note(id: $id, title: $title, descripcion: $descripcion)';
   }
 
   @override
@@ -133,6 +143,7 @@ class _$NoteImpl implements _Note {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NoteImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.descripcion, descripcion) ||
                 other.descripcion == descripcion));
@@ -140,7 +151,7 @@ class _$NoteImpl implements _Note {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, title, descripcion);
+  int get hashCode => Object.hash(runtimeType, id, title, descripcion);
 
   /// Create a copy of Note
   /// with the given fields replaced by the non-null parameter values.
@@ -157,13 +168,15 @@ class _$NoteImpl implements _Note {
 }
 
 abstract class _Note implements Note {
-  const factory _Note({
-    required final String title,
-    required final String descripcion,
-  }) = _$NoteImpl;
+  const factory _Note(
+      {required final String id,
+      required final String title,
+      required final String descripcion}) = _$NoteImpl;
 
   factory _Note.fromJson(Map<String, dynamic> json) = _$NoteImpl.fromJson;
 
+  @override
+  String get id;
   @override
   String get title;
   @override

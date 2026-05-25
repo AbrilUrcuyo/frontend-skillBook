@@ -6,6 +6,7 @@ part 'note.g.dart';
 @freezed
 class Note with _$Note {
   const factory Note({
+    required String id,
     required String title,
     required String descripcion,
   }) = _Note;
