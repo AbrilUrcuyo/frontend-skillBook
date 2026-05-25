@@ -6,6 +6,8 @@ import '../../features/notes/data/remote/note_service.dart';
 import '../../features/notes/data/repositories/note_repository_impl.dart';
 import '../../features/notes/domain/repositories/note_repository.dart';
 import '../network/api_client.dart';
+import '../../features/notes/presentation/notes_list/viewmodels/note_list_viewmodel.dart';
+import '../../features/notes/presentation/note_detail/viewmodels/note_detail_viewmodel.dart';
 
 final getIt = GetIt.instance;
 
@@ -44,6 +46,15 @@ void setupInjection({required String apiBaseUrl}) {
   // ========== Repositories ==========
   getIt.registerSingleton<NoteRepository>(
     NoteRepositoryImpl(remoteDataSource: getIt<NoteRemoteDataSource>()),
+  );
+
+  // ========== ViewModels (factories) ==========
+  getIt.registerFactory<NoteListViewModel>(
+    () => NoteListViewModel(getIt<NoteRepository>()),
+  );
+
+  getIt.registerFactory<NoteDetailViewModel>(
+    () => NoteDetailViewModel(getIt<NoteRepository>()),
   );
 }
 

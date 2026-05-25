@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import 'features/notes/presentation/note_detail/screens/noteDetailScreen.dart';
 import 'features/notes/presentation/notes_list/screens/noteListScreen.dart';
+import 'core/di/injection.dart';
+import 'features/notes/presentation/notes_list/viewmodels/note_list_viewmodel.dart';
+import 'features/notes/presentation/note_detail/viewmodels/note_detail_viewmodel.dart';
 
 void main() {
+  // Configura la inyección de dependencias (ajusta la URL base a tu backend)
+  setupInjection(apiBaseUrl: 'https://example.com');
   runApp(const MyApp());
 }
 
@@ -13,9 +18,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<NoteListViewModel>(
+          create: (_) => getIt<NoteListViewModel>(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => getIt<NoteDetailViewModel>(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
         // This is the theme of your application.
         //
         // TRY THIS: Try running your application with "flutter run". You'll see
@@ -31,9 +45,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
         home: const NoteListScreen(),
+      ),
     );
   }
 }

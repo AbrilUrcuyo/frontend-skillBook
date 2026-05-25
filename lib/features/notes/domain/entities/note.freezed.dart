@@ -12,7 +12,7 @@ part of 'note.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-dto',
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
 Note _$NoteFromJson(Map<String, dynamic> json) {
@@ -59,19 +59,20 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
   $Res call({Object? id = null, Object? title = null, Object? content = null}) {
     return _then(
       _value.copyWith(
-        id: null == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                as String,
-        title: null == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                as String,
-        content: null == content
-            ? _value.content
-            : content // ignore: cast_nullable_to_non_nullable
-                as String,
-      ) as $Val,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            content: null == content
+                ? _value.content
+                : content // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
     );
   }
 }
@@ -79,8 +80,9 @@ class _$NoteCopyWithImpl<$Res, $Val extends Note>
 /// @nodoc
 abstract class _$$NoteImplCopyWith<$Res> implements $NoteCopyWith<$Res> {
   factory _$$NoteImplCopyWith(
-          _$NoteImpl value, $Res Function(_$NoteImpl) then) =
-      __$$NoteImplCopyWithImpl<$Res>;
+    _$NoteImpl value,
+    $Res Function(_$NoteImpl) then,
+  ) = __$$NoteImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String id, String title, String content});
@@ -91,7 +93,7 @@ class __$$NoteImplCopyWithImpl<$Res>
     extends _$NoteCopyWithImpl<$Res, _$NoteImpl>
     implements _$$NoteImplCopyWith<$Res> {
   __$$NoteImplCopyWithImpl(_$NoteImpl _value, $Res Function(_$NoteImpl) _then)
-      : super(_value, _then);
+    : super(_value, _then);
 
   /// Create a copy of Note
   /// with the given fields replaced by the non-null parameter values.
@@ -103,15 +105,15 @@ class __$$NoteImplCopyWithImpl<$Res>
         id: null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
         title: null == title
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
         content: null == content
             ? _value.content
             : content // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }
@@ -120,8 +122,11 @@ class __$$NoteImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NoteImpl implements _Note {
-  const _$NoteImpl(
-      {required this.id, required this.title, required this.content});
+  const _$NoteImpl({
+    required this.id,
+    required this.title,
+    required this.content,
+  });
 
   factory _$NoteImpl.fromJson(Map<String, dynamic> json) =>
       _$$NoteImplFromJson(json);
@@ -167,10 +172,11 @@ class _$NoteImpl implements _Note {
 }
 
 abstract class _Note implements Note {
-  const factory _Note(
-      {required final String id,
-      required final String title,
-      required final String content}) = _$NoteImpl;
+  const factory _Note({
+    required final String id,
+    required final String title,
+    required final String content,
+  }) = _$NoteImpl;
 
   factory _Note.fromJson(Map<String, dynamic> json) = _$NoteImpl.fromJson;
 

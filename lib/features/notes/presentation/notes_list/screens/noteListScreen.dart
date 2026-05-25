@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../note_detail/screens/noteDetailScreen.dart';
+import '../viewmodels/note_list_viewmodel.dart';
 
 // ── Colores de la paleta ──────────────────────────────────────────────────────
 const Color kPrimary     = Color(0xFF1A759F);
@@ -31,7 +35,15 @@ class NoteListScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimary,
         tooltip: 'Add note',
-        onPressed: null,
+        onPressed: () async {
+          // Navegar a la pantalla de detalle para crear una nueva nota
+          await Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => const NoteDetailScreen(),
+          ));
+          // Después de volver, recargar la lista
+          final vm = context.read<NoteListViewModel>();
+          await vm.loadNotes();
+        },
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
@@ -44,12 +56,54 @@ class _NoteListBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Por ahora lista vacía; aquí irán los items reales
+    final vm = context.watch<NoteListViewModel>();
+
+    // Cargar notas una vez después del primer frame si es necesario
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!vm.isLoading && vm.notes.isEmpty && vm.error == null) {
+        vm.loadNotes();
+      }
+    });
+
+    if (vm.isLoading && vm.notes.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (vm.error != null && vm.notes.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text('Error: ${vm.error}'),
+            const SizedBox(height: 8),
+            ElevatedButton(
+              onPressed: vm.loadNotes,
+              child: const Text('Reintentar'),
+            ),
+          ],
+        ),
+      );
+    }
+
     return ListView.separated(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-      itemCount: 0,             // <- se llenará desde el ViewModel
+      itemCount: vm.notes.length,
       separatorBuilder: (_, __) => const SizedBox(height: 10),
-      itemBuilder: (context, index) => const SizedBox.shrink(),
+      itemBuilder: (context, index) {
+        final note = vm.notes[index];
+        return NoteCard(
+          title: note.title,
+          preview: note.content,
+          onTap: () async {
+            // Navegar a detalle y cargar la nota por id
+            await Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => NoteDetailScreen(routeNoteId: note.id),
+            ));
+            // Al volver, recargar la lista
+            await vm.loadNotes();
+          },
+        );
+      },
     );
   }
 }
