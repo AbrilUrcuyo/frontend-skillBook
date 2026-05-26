@@ -20,6 +20,13 @@ class NoteListViewModel extends ChangeNotifier {
 
     try {
       notes = await _repository.findAll();
+      // Debug log: mostrar en consola lo que nos llega del repositorio
+      // Esto ayuda a verificar si los títulos/contendido vienen vacíos o con campos distintos.
+      // Ejemplo de salida: "DEBUG: loaded 3 notes: [Note(id:1, title:..., content:...)]"
+      try {
+        // ignore: avoid_print
+        print('DEBUG: loaded ${notes.length} notes: ${notes.map((n) => '{id:${n.id}, title:${n.title}, content:${n.content}}').toList()}');
+      } catch (_) {}
       isLoading = false;
     } catch (e) {
       error = e.toString();

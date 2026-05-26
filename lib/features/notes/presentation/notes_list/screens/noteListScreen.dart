@@ -92,8 +92,8 @@ class _NoteListBody extends StatelessWidget {
       itemBuilder: (context, index) {
         final note = vm.notes[index];
         return NoteCard(
-          title: note.title,
-          preview: note.content,
+          title: note.title.isNotEmpty ? note.title : '(sin título)',
+          preview: note.content.isNotEmpty ? note.content : '(sin contenido)',
           onTap: () async {
             // Navegar a detalle y cargar la nota por id
             await Navigator.of(context).push(MaterialPageRoute(
@@ -123,48 +123,62 @@ class NoteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border(
-            left: BorderSide(color: kAccent, width: 4),
-            top: BorderSide(color: kCardBorder, width: 0.8),
-            right: BorderSide(color: kCardBorder, width: 0.8),
-            bottom: BorderSide(color: kCardBorder, width: 0.8),
+    final radius = BorderRadius.circular(12);
+
+    return Material(
+      color: Colors.white,
+      borderRadius: radius,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: radius,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: radius,
+            border: Border.all(color: kCardBorder, width: 0.8),
           ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Título
-            Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF1A2A35),
+          child: Stack(
+            children: [
+              // Franja de acento interna sin afectar el layout.
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(width: 4, color: kAccent),
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-            // Preview del contenido
-            Text(
-              preview,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 13,
-                color: Color(0xFF5A6A72),
-                height: 1.4,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(18, 12, 14, 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF1A2A35),
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      preview,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Color(0xFF5A6A72),
+                        height: 1.4,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-          ],
+            ],
+          ),
         ),
       ),
     );

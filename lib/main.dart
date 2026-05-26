@@ -8,7 +8,7 @@ import 'features/notes/presentation/note_detail/viewmodels/note_detail_viewmodel
 
 void main() {
   // Configura la inyección de dependencias (ajusta la URL base a tu backend)
-  setupInjection(apiBaseUrl: 'https://example.com');
+  setupInjection(apiBaseUrl: 'http://10.0.2.2:8080/v1');
   runApp(const MyApp());
 }
 

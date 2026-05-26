@@ -21,9 +21,23 @@ class NoteDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final vm = context.watch<NoteDetailViewModel>();
 
-    // Cargar la nota si se proporcionó un id y aún no está cargada
+    // Sincroniza el estado del VM con la ruta actual.
+    // Esto evita mostrar la nota anterior al abrir una distinta.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (routeNoteId != null && vm.note == null && !vm.isLoading) {
+      if (vm.isLoading) {
+        return;
+      }
+
+      if (routeNoteId == null) {
+        // Modo creación: limpia cualquier nota previa en memoria.
+        if (vm.note != null || vm.error != null || vm.isSuccess) {
+          vm.resetState();
+        }
+        return;
+      }
+
+      // Modo edición: recarga si no hay nota o si el id no coincide.
+      if (vm.note == null || vm.note!.id != routeNoteId) {
         vm.loadNote(routeNoteId!);
       }
     });

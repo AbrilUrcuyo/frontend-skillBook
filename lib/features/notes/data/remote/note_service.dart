@@ -64,7 +64,8 @@ class NoteService {
       body: jsonEncode(_writeBody(note)),
     );
 
-    _ensureSuccess(response, expected: 201);
+    // Accept 201 (created) but also 200 in case the backend returns 200 on create.
+    _ensureSuccess(response, expected: [200, 201]);
 
     return NoteDto.fromJson(jsonDecode(response.body) as Map<String, dynamic>);
   }
@@ -87,11 +88,17 @@ class NoteService {
       headers: const {'Accept': 'application/json'},
     );
 
-    _ensureSuccess(response, expected: 204);
+    // Algunos backends responden 200 en DELETE exitoso; OpenAPI comúnmente usa 204.
+    _ensureSuccess(response, expected: [200, 204]);
   }
 
-  void _ensureSuccess(http.Response response, {required int expected}) {
-    if (response.statusCode == expected) return;
+  void _ensureSuccess(http.Response response, {required Object expected}) {
+    // `expected` can be a single int (e.g. 200) or an Iterable<int> (e.g. [200, 201]).
+    final List<int> expectedCodes = expected is Iterable<int>
+        ? expected.cast<int>().toList()
+        : <int>[expected as int];
+
+    if (expectedCodes.contains(response.statusCode)) return;
 
     throw http.ClientException(
       'Error HTTP ${response.statusCode} en ${response.request?.method} ${response.request?.url}',

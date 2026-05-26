@@ -15,7 +15,9 @@ class NoteDetailViewModel extends ChangeNotifier {
 
   Future<void> loadNote(String id) async {
     isLoading = true;
+    note = null;
     error = null;
+    isSuccess = false;
     notifyListeners();
 
     try {
